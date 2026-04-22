@@ -2,9 +2,9 @@
 # UMI-erp project
 
 ## Initialize & Clone
-git init                        # initialize a new repo
-git clone <url>                 # clone a remote repo
-git clone <url> my-folder       # clone into a specific folder
+> git init                        # initialize a new repo
+> git clone <url>                 # clone a remote repo
+> git clone <url> my-folder       # clone into a specific folder
 
 ## Run save-session
 > npm install dotenv --save-dev   # install dotenv
