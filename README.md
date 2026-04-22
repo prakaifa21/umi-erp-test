@@ -21,7 +21,7 @@ npm install dotenv --save-dev
 
 ### 2. Create `.env` file
 ```env
-BASE_URL="https://your-umi-erp-url.com"
+BASE_URL="url"
 ```
 
 ### 3. Run session script to login & get token
@@ -77,14 +77,6 @@ npx playwright test
 
 ---
 
-## Tips
-
-| Command | Description |
-|---|---|
-| `npx playwright test --debug` | Step through tests in debug mode |
-| `npx playwright codegen <url>` | Auto-generate test code by clicking |
-| `npx playwright show-report` | View HTML test report |
-| `npx playwright test --workers=4` | Run tests in parallel |
 
 > **Note:** Add `session.json` to `.gitignore` to avoid committing auth tokens.
 ```bash
