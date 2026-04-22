@@ -8,3 +8,4 @@ node_modules/
 /playwright/.auth/
 session.json
 .env
+.github/workflows/playwright.yml
