@@ -1,7 +1,6 @@
 import { Page, Locator, expect } from '@playwright/test';
 //import { BasePage } from './BasePage';
 
-
 export class ModernTradeCustomerListPage { //extends BasePage
   readonly page: Page;
   readonly searchInput: Locator;
@@ -22,9 +21,11 @@ export class ModernTradeCustomerListPage { //extends BasePage
   readonly nextPageButton: Locator;
   readonly activePageButton: Locator;
   readonly emptyStateMessage: Locator;
+  readonly customermenu: Locator;
 
   constructor(page: Page) {
     this.page = page;
+    this.customermenu = page.getByRole('button', {name: 'ModernTrade Customers'});
     this.searchInput = page.getByPlaceholder('Search by Business Partner or Customer Name or Tax ID')
     this.statusFilterDropdown = page.getByRole('button', { name: 'All Status' });
     this.tierSetupButton = page.getByRole('button', {name: 'Tier Setup'});
@@ -47,16 +48,19 @@ export class ModernTradeCustomerListPage { //extends BasePage
     this.prevPageButton = this.paginationContainer.locator('a[aria-label="Go to previous page"]');
     this.nextPageButton = this.paginationContainer.locator('a[aria-label="Go to next page"]');
     this.activePageButton = this.paginationContainer.locator('a[aria-current="page"]');
-    this.emptyStateMessage = page.getByAltText('No Customer Data — Please Sync Data from SAP');
+    this.emptyStateMessage = page.getByText('No Customer Data — Please Sync Data from SAP');
   }
 
-  // ── Actions ──────────────────────────────────────────────────────────────────
 
   async navigate(path: string) {
     const cleanPath = path.startsWith('/') ? path : `/${path}`;
     await this.page.goto(cleanPath, { waitUntil: 'domcontentloaded' });
     await this.page.waitForLoadState('load');
   }
+ 
+  // async clickCustomerMenu() {
+  //   await this.customermenu.click();
+  // }
 
   async search(query: string) {
     await this.searchInput.fill(query);
@@ -67,10 +71,9 @@ export class ModernTradeCustomerListPage { //extends BasePage
     await this.page.waitForTimeout(300);
   }
 
-//   async clearSearch() {
-//     await this.searchInput.clear();
-//     await this.page.waitForTimeout(300);
-//   }
+  async clearSearch() {
+    await this.searchInput.clear();
+  }
 
   async getVisibleRowCount(): Promise<number> {
     return this.tableRows.count();
@@ -139,11 +142,8 @@ export class ModernTradeCustomerListPage { //extends BasePage
 //     await this.page.waitForTimeout(300);
 //   }
 
-//   async filterByStatus(status: 'All Status' | 'Active' | 'Inactive' | 'Pending' | 'No Account') {
-//     await this.statusFilterDropdown.click();
-//     await this.page.getByRole('option', { name: status })
-//       .or(this.page.getByText(status, { exact: true }))
-//       .click();
-//     await this.page.waitForTimeout(300);
-//   }
+  async filterByStatus(status: 'All Status' | 'Active' | 'Inactive' | 'Pending' | 'No Account') {
+    await this.statusFilterDropdown.click();
+    await this.page.getByRole('menuitem', { name: status , exact: true }).click();
+  }
 }
